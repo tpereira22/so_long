@@ -12,7 +12,7 @@
 
 NAME		= so_long
 
-SRCS		= srcs/so_long.c srcs/maps.c srcs/window.c srcs/error.c srcs/draw.c
+SRCS		= srcs/so_long.c srcs/maps.c srcs/window.c srcs/check_map.c srcs/draw.c srcs/hooks.c
 
 OBJS		= $(SRCS:.c=.o)
 

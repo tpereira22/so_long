@@ -19,7 +19,7 @@ void    map_error(t_win *win)
 {
     if (win->mapstr)
         free(win->mapstr);
-    write(1, "Error\nInvalid Map", 17);
+    ft_putstr_fd("Error\nInvalid Map", 1);
     exit(1);
 }
 
@@ -48,14 +48,16 @@ int main(int argc, char **argv)
         if (check_errors(win.mapstr, win.map, &win))
         {
             game_window(&win);
+            //mlx_hook(win.mlx_ptr, 17, 0, exit_game, &win);
+            mlx_key_hook(win.win_ptr, read_key, &win);
+            mlx_loop(win.mlx_ptr);
         }
         else
             map_error(&win);
     }
     else 
     {
-        write(1, "Invalid Number of Arguments or Map File !", 41);
-        write(1, "\n", 1);
+        ft_putstr_fd("Invalid Number of Arguments or Map File !\n", 1);
         exit(1);
     }
     return(0);

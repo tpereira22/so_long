@@ -15,7 +15,7 @@
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
 
-# define K_ESC  65307
+# define ESC  65307
 # define S      115
 # define D      100
 # define W      119
@@ -24,6 +24,12 @@
 typedef struct s_img
 {
     void    *back;
+    void    *wall;
+    void    *player;
+    void    *collect;
+    void    *exit_c;
+    void    *exit_o;
+
 }   t_img;
 
 typedef struct s_map
@@ -55,11 +61,20 @@ char    **ft_read_map(char *str);
 //window.c
 void    game_window(t_win *win);
 void    get_img(t_win *win);
+void    put_img(t_win *win, void *img, int x, int y);
 
-//error.c
+//check_map.c
 int check_errors(char **mapstr, t_map *map, t_win *win);
 int check_walls(t_win win);
 int check_map_size(char **mapstr, t_map *map);
 int check_letters(char **mapstr, t_map *map);
+
+//draw.c
+void    draw_img(t_win *win);
+
+//hooks.c
+int read_key(int keycode, t_win *win);
+int exit_game(t_win *win);
+void    free_map(char **mapstr);
 
 #endif

@@ -19,7 +19,7 @@ void    map_error(t_win *win)
 {
     if (win->mapstr)
         free(win->mapstr);
-    ft_putstr_fd("Error\nInvalid Map", 1);
+    ft_putstr_fd("Error\nInvalid Map\n", 1);
     exit(1);
 }
 

@@ -69,6 +69,10 @@ int check_walls(t_win win);
 int check_map_size(char **mapstr, t_map *map);
 int check_letters(char **mapstr, t_map *map);
 
+//path_find.c
+int path_find(t_win *win, char **mapstr);
+int get_path(t_win *win, char **mapstr, int y, int x);
+
 //draw.c
 void    draw_img(t_win *win);
 

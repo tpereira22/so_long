@@ -109,7 +109,7 @@ int check_errors(char **mapstr, t_map *map, t_win *win)
         }
         i++;
     }
-    if (check_map_size(mapstr, map) && check_walls(*win) && check_letters(mapstr, map))
+    if (check_map_size(mapstr, map) && check_walls(*win) && check_letters(mapstr, map) && path_find(win, mapstr))
         return (1);
     return (0);
 }

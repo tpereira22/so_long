@@ -28,16 +28,31 @@ char    **ft_read_map(char *str)
         return (NULL);
     temp_map = malloc(sizeof(char));
     temp_map[0] = '\0';
-    while ((line = get_next_line(fd)))
+    while (1)
     {
+        line = get_next_line(fd);
+        if (!line)
+            break ;
         temp = temp_map;
         temp_map = ft_strjoin(temp_map, line);
         free(line);
         free(temp);
-    
     }
     fullmap = ft_split(temp_map, '\n');
     free(temp_map);
     close(fd);
+    // i = 0;
+    // while (fullmap[i])
+    // {
+    //     j = 0;
+    //     while (fullmap[i][j])
+    //     {
+    //         ft_putchar_fd(fullmap[i][j], 1);
+    //         j++;
+    //     }
+    //     ft_putchar_fd(10, 1);
+    //     i++;
+    // }
+    // ft_putchar_fd(10, 1);
     return (fullmap);
 }

@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timartin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htomas-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/01 16:42:46 by timartin          #+#    #+#             */
-/*   Updated: 2022/04/07 19:23:04 by timartin         ###   ########.fr       */
+/*   Created: 2022/03/03 18:01:54 by htomas-d          #+#    #+#             */
+/*   Updated: 2022/09/19 10:51:38 by htomas-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdbool.h>
 
-// Allocates memory and returns an array 
-// of strings obtained by splitting s 
-// using the character c as a delimiter.
 
 static char	**ft_free(char **rtn)
 {

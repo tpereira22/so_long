@@ -37,6 +37,47 @@ int check_map_size(char **mapstr, t_map *map)
         return (0);
     map->height = height;
     map->width = width;
+    // ft_putnbr_fd(map->height, 1);
+    // ft_putchar_fd(10, 1);
+    // ft_putnbr_fd(map->width, 1);
+    // ft_putchar_fd(10, 1);
+    return (1);
+}
+
+int check_letters(char **mapstr, t_map *map)
+{
+    int i;
+    int j;
+
+    map->player = 0;
+    map->collect = 0;
+    map->exit = 0;
+    i = 0;
+    while (i < map->height - 1)
+    {
+        j = 0;
+        while (j < map->width - 1)
+        {
+            if (mapstr[i][j] == 'P')
+            {
+                map->player++;
+                // map->player_y = i;
+                // map->player_x = j;
+            }
+            else if (mapstr[i][j] == 'C')
+                map->collect++;
+            else if (mapstr[i][j] == 'E')
+            {
+                map->exit++;
+                map->exit_y = i;
+                map->exit_x = j;
+            }
+            j++;
+        }
+        i++;
+    }
+    if (map->player != 1 || map->collect == 0 || map->exit != 1)
+        return (0);
     return (1);
 }
 
@@ -61,35 +102,6 @@ int check_walls(t_win win)
     return (1);
 }
 
-int check_letters(char **mapstr, t_map *map)
-{
-    int i;
-    int j;
-
-    map->player = 0;
-    map->collect = 0;
-    map->exit = 0;
-    i = 0;
-    while (i < map->height - 1)
-    {
-        j = 0;
-        while (j < map->width - 1)
-        {
-            if (mapstr[i][j] == 'P')
-                map->player++;
-            else if (mapstr[i][j] == 'C')
-                map->collect++;
-            else if (mapstr[i][j] == 'E')
-                map->exit++;
-            j++;
-        }
-        i++;
-    }
-    if (map->player != 1 || map->collect == 0 || map->exit != 1)
-        return (0);
-    return (1);
-}
-
 int check_errors(char **mapstr, t_map *map, t_win *win)
 {
     int i;
@@ -109,7 +121,7 @@ int check_errors(char **mapstr, t_map *map, t_win *win)
         }
         i++;
     }
-    if (check_map_size(mapstr, map) && check_walls(*win) && check_letters(mapstr, map) && path_find(win, mapstr))
+    if (check_map_size(mapstr, map) && check_walls(*win) && check_letters(mapstr, map) && path_find(win))
         return (1);
     return (0);
 }

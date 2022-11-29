@@ -23,7 +23,7 @@ void    map_error(t_win *win)
     exit(1);
 }
 
-int ft_check_map(char *str)
+int ft_check_map_name(char *str)
 {
     int i;
 
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 {
     t_win win;
 
-    if (argc == 2 && ft_check_map(argv[1]))
+    if (argc == 2 && ft_check_map_name(argv[1]))
     {
         win.mapstr = ft_read_map(argv[1]);
         win.map = malloc(sizeof(t_map));
@@ -48,8 +48,9 @@ int main(int argc, char **argv)
         if (check_errors(win.mapstr, win.map, &win))
         {
             game_window(&win);
-            //mlx_hook(win.mlx_ptr, 17, 0, exit_game, &win);
-            mlx_key_hook(win.win_ptr, read_key, &win);
+            mlx_key_hook(win.win_ptr, exit_esc, &win);
+            mlx_hook(win.win_ptr, 02, (1L << 0), read_key, &win);
+            mlx_hook(win.mlx_ptr, 17, 0, exit_game, &win);
             mlx_loop(win.mlx_ptr);
         }
         else

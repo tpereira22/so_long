@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 11:11:17 by timartin          #+#    #+#             */
-/*   Updated: 2022/11/24 11:11:19 by timartin         ###   ########.fr       */
+/*   Updated: 2022/11/30 21:08:11 by timartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,114 +14,101 @@
 #include "../mlx/mlx.h"
 #include "../libft/libft.h"
 
-int check_map_size(char **mapstr, t_map *map)
+int	check_map_size(char **mapstr, t_map *map)
 {
-    int height;
-    int width;
-    int temp_width;
+	int	height;
+	int	width;
+	int	temp_width;
 
-    height = 0;
-    width = 0;
-    temp_width = 0;
-    while (mapstr[height])
-    {
-        width = 0;
-        while (mapstr[height][width])
-            width++;
-        if (height && temp_width != width)
-            return (0);
-        temp_width = width;
-        height++;
-    }
-    if (height < 3 || (height && height == width))
-        return (0);
-    map->height = height;
-    map->width = width;
-    // ft_putnbr_fd(map->height, 1);
-    // ft_putchar_fd(10, 1);
-    // ft_putnbr_fd(map->width, 1);
-    // ft_putchar_fd(10, 1);
-    return (1);
+	height = 0;
+	width = 0;
+	temp_width = 0;
+	while (mapstr[height])
+	{
+		width = 0;
+		while (mapstr[height][width])
+			width++;
+		if (height && temp_width != width)
+		{
+			ft_putstr_fd("Error\nInvalid Map Size !\n", 1);
+			return (0);
+		}
+		temp_width = width;
+		height++;
+	}
+	if (!check_square(height, width))
+		return (0);
+	map->height = height;
+	map->width = width;
+	return (1);
 }
 
-int check_letters(char **mapstr, t_map *map)
+int	check_letters(char **mapstr, t_map *map)
 {
-    int i;
-    int j;
-
-    map->player = 0;
-    map->collect = 0;
-    map->exit = 0;
-    i = 0;
-    while (i < map->height - 1)
-    {
-        j = 0;
-        while (j < map->width - 1)
-        {
-            if (mapstr[i][j] == 'P')
-            {
-                map->player++;
-                // map->player_y = i;
-                // map->player_x = j;
-            }
-            else if (mapstr[i][j] == 'C')
-                map->collect++;
-            else if (mapstr[i][j] == 'E')
-            {
-                map->exit++;
-                map->exit_y = i;
-                map->exit_x = j;
-            }
-            j++;
-        }
-        i++;
-    }
-    if (map->player != 1 || map->collect == 0 || map->exit != 1)
-        return (0);
-    return (1);
+	map->player = 0;
+	map->collect = 0;
+	map->exit = 0;
+	if (!check_assets(mapstr, map))
+	{
+		ft_putstr_fd
+			("Error\nInvalid Number of Players, Exits or Collectables !\n", 1);
+		return (0);
+	}
+	return (1);
 }
 
-int check_walls(t_win win)
+int	check_walls(t_win win)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (i < win.map->width)
-    {
-        if (win.mapstr[0][i] != '1' || win.mapstr[win.map->height - 1][i] != '1')
-            return(0);
-        i++;
-    }
-    i = 0;
-    while (i < win.map->height)
-    {
-        if (win.mapstr[i][0] != '1' || win.mapstr[i][win.map->width - 1] != '1')
-            return (0);
-        i++;
-    }
-    return (1);
+	i = 0;
+	while (i < win.map->width)
+	{
+		if (win.mapstr[0][i] != '1'
+		|| win.mapstr[win.map->height - 1][i] != '1')
+		{
+			ft_putstr_fd("Error\nMap is not Surrounded by Walls !\n", 1);
+			return (0);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < win.map->height)
+	{
+		if (win.mapstr[i][0] != '1' || win.mapstr[i][win.map->width - 1] != '1')
+		{
+			ft_putstr_fd("Error\nMap is not Surrounded by Walls !\n", 1);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 
-int check_errors(char **mapstr, t_map *map, t_win *win)
+int	check_map_format(char **mapstr, t_map *map, t_win *win)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    if (!mapstr)
-        return (0);
-    i = 0;
-    while (mapstr[i])
-    {
-        j = 0;
-        while (mapstr[i][j])
-        {
-            if (mapstr[i][j] != '0' && mapstr[i][j] != '1' && mapstr[i][j] != 'C' && mapstr[i][j] != 'E' && mapstr[i][j] != 'P')
-                return (0);
-            j++;
-        }
-        i++;
-    }
-    if (check_map_size(mapstr, map) && check_walls(*win) && check_letters(mapstr, map) && path_find(win))
-        return (1);
-    return (0);
+	if (!mapstr)
+		return (0);
+	i = -1;
+	while (mapstr[++i])
+	{
+		j = -1;
+		while (mapstr[i][++j])
+		{
+			if (mapstr[i][j] != '0' && mapstr[i][j] != '1'
+			&& mapstr[i][j] != 'C' && mapstr[i][j] != 'E'
+			&& mapstr[i][j] != 'P' && mapstr[i][j] != 'X')
+			{
+				ft_putstr_fd("Error\nCharacter not Valid !\n", 1);
+				return (0);
+			}
+		}
+	}
+	if (check_map_size(mapstr, map) && check_walls(*win)
+		&& check_letters(mapstr, map) && path_find(win))
+		return (1);
+	return (0);
 }

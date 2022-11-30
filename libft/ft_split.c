@@ -6,13 +6,12 @@
 /*   By: htomas-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:01:54 by htomas-d          #+#    #+#             */
-/*   Updated: 2022/09/19 10:51:38 by htomas-d         ###   ########.fr       */
+/*   Updated: 2022/11/30 21:40:29 by timartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdbool.h>
-
 
 static char	**ft_free(char **rtn)
 {

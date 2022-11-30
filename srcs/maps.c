@@ -6,7 +6,7 @@
 /*   By: timartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 17:19:48 by timartin          #+#    #+#             */
-/*   Updated: 2022/11/09 17:19:50 by timartin         ###   ########.fr       */
+/*   Updated: 2022/11/30 20:43:50 by timartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,31 @@
 #include "../libft/libft.h"
 #include "../libft/get_next_line.h"
 
-char    **ft_read_map(char *str)
+char	**ft_read_map(char *str)
 {
-    int fd;
-    char **fullmap;
-    char *temp_map;
-    char *temp;
-    char *line;
+	int		fd;
+	char	**fullmap;
+	char	*temp_map;
+	char	*temp;
+	char	*line;
 
-    fd = open(str, O_RDONLY);
-    if (fd == -1)
-        return (NULL);
-    temp_map = malloc(sizeof(char));
-    temp_map[0] = '\0';
-    while (1)
-    {
-        line = get_next_line(fd);
-        if (!line)
-            break ;
-        temp = temp_map;
-        temp_map = ft_strjoin(temp_map, line);
-        free(line);
-        free(temp);
-    }
-    fullmap = ft_split(temp_map, '\n');
-    free(temp_map);
-    close(fd);
-    // i = 0;
-    // while (fullmap[i])
-    // {
-    //     j = 0;
-    //     while (fullmap[i][j])
-    //     {
-    //         ft_putchar_fd(fullmap[i][j], 1);
-    //         j++;
-    //     }
-    //     ft_putchar_fd(10, 1);
-    //     i++;
-    // }
-    // ft_putchar_fd(10, 1);
-    return (fullmap);
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+		return (NULL);
+	temp_map = malloc(sizeof(char));
+	temp_map[0] = '\0';
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		temp = temp_map;
+		temp_map = ft_strjoin(temp_map, line);
+		free(line);
+		free(temp);
+	}
+	fullmap = ft_split(temp_map, '\n');
+	free(temp_map);
+	close(fd);
+	return (fullmap);
 }

@@ -12,7 +12,7 @@
 
 NAME		= so_long
 
-SRCS		= srcs/so_long.c srcs/maps.c srcs/window.c srcs/check_map.c srcs/draw.c srcs/hooks.c
+SRCS		= srcs/so_long.c srcs/maps.c srcs/window.c srcs/check_map.c srcs/draw.c srcs/hooks.c srcs/path_find.c srcs/move.c srcs/img.c srcs/so_long_utils.c
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -22,7 +22,7 @@ MLX		= ./mlx/libmlx.a
 
 RM		= rm -f
 
-CC		= gcc -Wall -Wextra -Werror
+CC		= gcc -Wall -Wextra -Werror -g -fsanitize=address
 
 MLX_FLAGS	= -lXext -lX11 -lm -lz
 
